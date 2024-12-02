@@ -5,16 +5,53 @@ async function appController() {
     unitSelector.addEventListener('change', (event) => {
         const option = event.target.value;
         units = option;
-        console.log(units);
+        const tempsArray = Array.from(document.querySelectorAll('.temp'));
+        if (units === 'celsius') {
+            tempsArray.forEach((tempSection) => {
+                tempSection.innerText = toCelsius(Number(tempSection.innerText));
+            })
+        } else {
+            tempsArray.forEach((tempSection) => {
+                tempSection.innerText = toFahrenheit(Number(tempSection.innerText));
+            })
+        }
+        setUnits();
     })
 
-    function getTemp(temp) {
-        if (units === "celsius") {
-            return `${temp}°C`;
+    function toFahrenheit(temp) {
+        let result = (temp * 9 / 5) + 32;
+        if (!Number.isInteger(result)) {
+            result = result.toFixed(1);
+            if (result.endsWith('.0')) {
+                result = Math.trunc(result);
+            }
         }
-        const fahrenheit = (temp * 9 / 5) + 32;
-        return `${fahrenheit}°F`;
+        return result;
     }
+
+    function toCelsius(temp) {
+        let result =  (temp - 32) * 5 / 9;
+        if (!Number.isInteger(result)) {
+            result = result.toFixed(1);
+            if (result.endsWith('.0')) {
+                result = Math.trunc(result);
+            }
+        }
+        return result;
+    }
+
+    function setUnits() {
+        const unitsArray = Array.from(document.querySelectorAll('.unit'));
+        unitsArray.forEach((unitSection) => {
+            if (units === 'celsius') {
+                unitSection.innerText = '°C';
+            } else {
+                unitSection.innerText = '°F';
+            }
+
+        });
+    }
+
     function buildUrl(location) {
         const url_base = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/';
         const url_options = '?unitGroup=metric&contentType=json';
@@ -34,19 +71,25 @@ async function appController() {
 
     function displayData(data) {
         const main = document.getElementById('main');
+        main.classList.toggle('hidden');
 
-        const location = document.createElement('div');
-        location.classList.add('location');
-        location.innerText = `Weather forecast for: ${data.resolvedAddress}`;
-        main.appendChild(location);
+        const location = document.getElementById('location-section');
+        location.innerText += ` ${data.resolvedAddress}`;
+  
 
         const currentConditions = data.currentConditions;
 
-        const temp = document.createElement('div');
-        temp.classList.add('temp');
-        temp.innerText = `${getTemp(currentConditions.temp)}` 
-                        + ` / Feels like ${getTemp(currentConditions.feelslike)}`;
-        main.appendChild(temp);
+        const currentTemp = document.getElementById('current-temp');
+        currentTemp.innerText = units === "fahrenheit" ? 
+                                `${toFahrenheit(currentConditions.temp)}`
+                                : `${currentConditions.temp}`;
+        const feelsLikeTemp = document.getElementById('feels-like');
+        feelsLikeTemp.innerText = units === "fahrenheit" ? 
+                                `${toFahrenheit(currentConditions.feelslike)}`
+                                : `${currentConditions.feelslike}`;
+
+        setUnits();
+
         console.log(data);
     }
     displayData(await obtainWeather('tokyo'));

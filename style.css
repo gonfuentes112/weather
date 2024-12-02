@@ -16,10 +16,27 @@ body {
     line-height: 1.5;
 }
 
-h1 {
-    text-align: center;
-    margin-top: 1rem;
+.top {
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    width: 100%;
+}
 
+.title {
+    text-align: center;
+    font-size: 5rem;
+}
+
+.unit-selector {
+    justify-self: end;
+    padding-top: 0.5rem;
+    padding-right: 1rem;
+}
+
+select {
+    background-color: black;
+    color: darkviolet;
+    border-color: darkviolet;
 }
 
 form {
@@ -53,4 +70,10 @@ button {
     color: darkviolet;
     height: 2rem;
     font-size: 1.5rem;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }

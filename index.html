@@ -8,7 +8,17 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>myWeatherApp</h1>
+    <div class="top">
+        <div class="unit-selector" id="unit-selector">
+            <label for="units">Units: </label>
+            <select name="units" id="units">
+                <option value="celsius" selected>°C</option>
+                <option value="fahrenheit">°F</option>
+            </select>
+        </div>
+        <div class="title">myWeatherApp</div>
+    </div>
+
     <form action="" method="get">
         <p class="form-items">
             <label for="search-bar">Enter your location:</label>
@@ -17,7 +27,7 @@
         </p>
 
     </form>    
-    <main>
+    <main id="main">
 
     </main>
 </body>

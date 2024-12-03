@@ -92,7 +92,7 @@ async function appController() {
 
         const currentConditions = data.currentConditions;
         displayTemp(currentConditions);
-
+        displayConditions(data.description);
 
         console.log(data);
     }
@@ -102,12 +102,40 @@ async function appController() {
         currentTemp.innerText = units === "fahrenheit" ? 
                                 `${toFahrenheit(currentConditions.temp)}`
                                 : `${currentConditions.temp}`;
+        colorTemp(currentTemp, currentConditions.temp);
         const feelsLikeTemp = document.getElementById('feels-like');
         feelsLikeTemp.innerText = units === "fahrenheit" ? 
                                 `${toFahrenheit(currentConditions.feelslike)}`
                                 : `${currentConditions.feelslike}`;
-
+        colorTemp(feelsLikeTemp, currentConditions.feelslike);
         setUnits();
+    }
+
+    function colorTemp(span, temperature) {
+        const parent = span.parentElement;
+        if (temperature < 0) {
+            parent.dataset.tempColor = 'belowzero';
+            return;
+        }
+        if (temperature < 16) {
+            parent.dataset.tempColor = 'cold';
+            return;
+        }
+        if (temperature < 20) {
+            parent.dataset.tempColor = 'cool';
+            return;
+        }
+        if (temperature < 30) {
+            parent.dataset.tempColor = 'hot';
+            return;
+        }
+        parent.dataset.tempColor = 'veryhot';
+
+    }
+
+    function displayConditions(description) {
+        const descriptionContainer = document.getElementById('description');
+        descriptionContainer.innerText = description;
     }
 
 }

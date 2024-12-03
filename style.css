@@ -98,3 +98,27 @@ main.hidden {
 .temp-and-unit:first-of-type {
     padding-right: 1rem;
 }
+
+.temp-and-unit[data-temp-color="belowzero"] {
+    color: rgb(56, 56, 238);
+}
+
+.temp-and-unit[data-temp-color="cold"] {
+    color: rgb(138, 167, 223);
+}
+
+.temp-and-unit[data-temp-color="cool"] {
+    color: rgb(6, 170, 102);
+}
+
+.temp-and-unit[data-temp-color="warm"] {
+    color: rgb(232, 248, 0);
+}
+
+.temp-and-unit[data-temp-color="hot"] {
+    color: rgb(238, 185, 9);
+}
+
+.temp-and-unit[data-temp-color="veryhot"] {
+    color: rgb(248, 0, 0);
+}

@@ -6,6 +6,14 @@ async function appController() {
         changeUnits(event);
     })
 
+    const submitButton = document.getElementById('submit-button');
+    submitButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+        const location = document.getElementById('search-bar').value;
+        const data = await obtainWeather(location);
+        displayData(data);
+    })
+
     function changeUnits(event) {
         const option = event.target.value;
         units = option;
@@ -75,11 +83,12 @@ async function appController() {
 
     function displayData(data) {
         const main = document.getElementById('main');
-        main.classList.toggle('hidden');
+        if (main.classList.contains('hidden')) {
+            main.classList.toggle('hidden');
+        }       
 
-        const location = document.getElementById('location-section');
-        location.innerText += ` ${data.resolvedAddress}`;
-  
+        const locationSpan = document.getElementById('location-span');
+        locationSpan.innerText = `${data.resolvedAddress}`;
 
         const currentConditions = data.currentConditions;
 
@@ -96,6 +105,6 @@ async function appController() {
 
         console.log(data);
     }
-    displayData(await obtainWeather('tokyo'));
+
 }
 appController();

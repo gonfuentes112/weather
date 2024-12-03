@@ -74,11 +74,16 @@ button {
     cursor: pointer;
 }
 
+.loading-spinner {
+    margin-top: 2rem;
+    font-size: 2rem;
+}
+
 main {
     width: 60%;
 }
 
-main.hidden {
+.hidden {
     display:none;
 }
 

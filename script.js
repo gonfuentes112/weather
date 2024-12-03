@@ -66,7 +66,7 @@ async function appController() {
 
     function buildUrl(location) {
         const url_base = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/';
-        const url_options = '?unitGroup=metric&contentType=json';
+        const url_options = '?unitGroup=metric&contentType=json&lang=en';
         const api_key = 'UWK72QS3WHCYRRTJ7CQYPQCPD';
         return url_base
                 + location
@@ -75,18 +75,23 @@ async function appController() {
     }
     
     async function obtainWeather(location) {
+        const main = document.getElementById('main');
+        if (!main.classList.contains('hidden')) {
+            main.classList.toggle('hidden');
+        }       
+        const loadingSpinner = document.querySelector('.loading-spinner');
+        loadingSpinner.classList.toggle('hidden');
         const url = buildUrl(location);
         const response = await fetch(url);
         const weatherData = await response.json();
+        loadingSpinner.classList.toggle('hidden');
         return weatherData;
     }
 
     function displayData(data) {
-        const main = document.getElementById('main');
         if (main.classList.contains('hidden')) {
             main.classList.toggle('hidden');
-        }       
-
+        }  
         const locationSpan = document.getElementById('location-span');
         locationSpan.innerText = `${data.resolvedAddress}`;
 

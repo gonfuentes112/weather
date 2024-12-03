@@ -3,6 +3,10 @@ async function appController() {
 
     const unitSelector = document.getElementById('unit-selector');
     unitSelector.addEventListener('change', (event) => {
+        changeUnits(event);
+    })
+
+    function changeUnits(event) {
         const option = event.target.value;
         units = option;
         const tempsArray = Array.from(document.querySelectorAll('.temp'));
@@ -16,7 +20,7 @@ async function appController() {
             })
         }
         setUnits();
-    })
+    }
 
     function toFahrenheit(temp) {
         let result = (temp * 9 / 5) + 32;

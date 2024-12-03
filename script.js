@@ -91,7 +91,13 @@ async function appController() {
         locationSpan.innerText = `${data.resolvedAddress}`;
 
         const currentConditions = data.currentConditions;
+        displayTemp(currentConditions);
 
+
+        console.log(data);
+    }
+
+    function displayTemp(currentConditions) {
         const currentTemp = document.getElementById('current-temp');
         currentTemp.innerText = units === "fahrenheit" ? 
                                 `${toFahrenheit(currentConditions.temp)}`
@@ -102,8 +108,6 @@ async function appController() {
                                 : `${currentConditions.feelslike}`;
 
         setUnits();
-
-        console.log(data);
     }
 
 }
